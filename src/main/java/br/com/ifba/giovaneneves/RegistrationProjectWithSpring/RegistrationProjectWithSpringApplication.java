@@ -5,17 +5,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class RegistrationProjectWithSpringApplication implements CommandLineRunner{
+public class RegistrationProjectWithSpringApplication{
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(RegistrationProjectWithSpringApplication.class, args);
-
-	}
-
-	@Override
-	public void run(String... args) throws Exception {
-
 		System.setProperty("java.awt.headless", "true");
-		new br.com.ifba.giovaneneves.RegistrationProjectWithSpring.view.StudentDashboardGUI();
+		new br.com.ifba.giovaneneves.RegistrationProjectWithSpring.view.StudentDashboardGUI().setVisible(true);
+
 	}
+
 }
