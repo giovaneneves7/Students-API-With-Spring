@@ -9,7 +9,7 @@ import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.exceptions.student
 import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.model.Student;
 import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.util.DataFormatValidator;
 
-import javax.swing.*;
+import javax.swing.JOptionPane;
 import java.time.LocalDate;
 //--+ END Imports +--//
 

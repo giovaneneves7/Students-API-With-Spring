@@ -1,20 +1,34 @@
 package br.com.ifba.giovaneneves.RegistrationProjectWithSpring.service;
 
-import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.dao.StudentRepository;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.model.Student;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.dao.StudentDAOImpl;
+
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.exceptions.student.ExistingRegistrationNumberException;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.exceptions.student.InvalidAgeException;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.exceptions.student.InvalidRegistrationNumberException;
+
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.exceptions.student.StudentNotFoundException;
+import lombok.Data;
+
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+
 import java.util.List;
 
+
+@Data
 public class StudentService{
 
-    //----------------------------------{ ATTRIBUTES }----------------------------------//
+    //============================================{ ATTRIBUTES }============================================//
+
     private final static String REGISTRATION_NUMBER_ALREADY_EXISTS = "The specified registration number already exists in the database";
     private final static String STUDENT_NOT_FOUND = "The specified student could not be found";
     private final static String REGISTRATION_NUMBER_INVALID_LENGTH = "The registration number must have exactly 4 digits.";
     private final static String INVALID_AGE = "The student must be 13 years or older to be registered";
     private final StudentDAOImpl studentDaoImpl;
 
-    //----------------------------------{ CONSTRUCTOR }----------------------------------//
+    //============================================{ GETTERS AND SETTERS }============================================//
 
     public StudentService(){
 
@@ -22,8 +36,7 @@ public class StudentService{
     }
 
 
-//----------------------------------{ METHODS }----------------------------------//
-
+    //============================================{ METHODS }============================================//
     /**
      *
      * Inserts a student in the database
@@ -55,7 +68,7 @@ public class StudentService{
      * @return student with the specified ID.
      */
     public Student findStudentById(int id) throws StudentNotFoundException{
-        Student foundStudent = studentDaoImpl.findById(id, Student.class);
+        Student foundStudent = (Student) studentDaoImpl.findById(id, Student.class);
 
         //--+ Checks if there is a student with the specified id +--//
         if(foundStudent == null)
@@ -82,7 +95,7 @@ public class StudentService{
      */
     public boolean removeStudent(int id) throws StudentNotFoundException {
 
-        Student foundStudent = studentDaoImpl.findById(id, Student.class);
+        Student foundStudent = (Student) studentDaoImpl.findById(id, Student.class);
 
         //--+ Checks if there is a student with the specified id +--//
         if(foundStudent == null)
@@ -97,7 +110,7 @@ public class StudentService{
      * @param student to be updated.
      * @return true if the student exists in the database and the update was successful, false otherwise.
      */
-    public boolean updateStudent(Student student) throws StudentNotFoundException{
+    public boolean updateStudent(Student student) throws StudentNotFoundException {
 
         //--+ Checks if the student is contained in the database +--//
         if(!studentDaoImpl.listStudents().contains(student))

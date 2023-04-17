@@ -2,10 +2,10 @@ package br.com.ifba.giovaneneves.RegistrationProjectWithSpring.view;
 
 //--+ Imports +--//
 
-import br.com.ifba.giovaneneves.oopregistrationproject.controller.FacadeInstance;
-import br.com.ifba.giovaneneves.oopregistrationproject.exceptions.student.StudentNotFoundException;
-import br.com.ifba.giovaneneves.oopregistrationproject.model.Student;
-import br.com.ifba.giovaneneves.oopregistrationproject.model.StudentsTableModel;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.controller.FacadeInstance;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.exceptions.student.StudentNotFoundException;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.model.Student;
+import br.com.ifba.giovaneneves.RegistrationProjectWithSpring.model.StudentsTableModel;
 
 import javax.swing.*;
 import java.awt.*;
