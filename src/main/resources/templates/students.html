@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Students</title>
+    <link rel="stylesheet" type="text/css" href="students.css">
+</head>
+<body>
+
+<h1 th:text="${tableStudents}"></h1>
+
+<table id="studentsTable">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Registration Number</th>
+        <th>Academic Year</th>
+        <th>Average grades</th>
+    </tr>
+    </thead>
+    <tbody>
+
+       <tr th:if="${students == null}">
+            <td colspan="2">Empty Table</td>
+        </tr>
+
+        <tr th:each="student : ${students}">
+            <td th:text="${student.id}"></td>
+            <td th:text="${student.name}"></td>
+            <td th:text="${student.registrationNumber}"></td>
+            <td th:text="${student.academicYear}"></td>
+            <td th:text="${student.averageGrades}"></td>
+
+        </tr>
+    </tbody>
+
+</table>
+
+</body>
+</html>
