@@ -55,8 +55,8 @@ public class StudentsTableModel extends AbstractTableModel {
                 return this.getStudentList().get(rowIndex).getAverageGrades();
             case 4:
                 return this.getStudentList().get(rowIndex).getAcademicYear();
-            case 5:
-                return this.getStudentList().get(rowIndex).getAge();
+            /*case 5:
+                return this.getStudentList().get(rowIndex).getAge();*/
 
         }
 

@@ -50,8 +50,8 @@ public class StudentService {
             throw new InvalidRegistrationNumberException(REGISTRATION_NUMBER_INVALID_LENGTH);
 
         //--+ Checks if the student is older than 13  +--//
-        if(student.getAge() < 13)
-            throw new InvalidAgeException(INVALID_AGE);
+     /*   if(student.getAge() < 13)
+            throw new InvalidAgeException(INVALID_AGE);*/
 
         return this.getStudentDaoImpl().save(student);
 
