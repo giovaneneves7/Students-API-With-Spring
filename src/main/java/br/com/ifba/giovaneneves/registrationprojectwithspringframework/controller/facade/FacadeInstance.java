@@ -1,4 +1,4 @@
-package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller;
+package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller.facade;
 
 public class FacadeInstance {
 

@@ -1,4 +1,4 @@
-package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller;
+package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller.facade;
 
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.service.StudentService;
@@ -6,11 +6,10 @@ import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exception
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.InvalidAgeException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.InvalidRegistrationNumberException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.StudentNotFoundException;
-import org.springframework.stereotype.Controller;
 
 import java.util.List;
 
-public class Facade implements IFacade{
+public class Facade implements IFacade {
 
     private final StudentService studentService = new StudentService();
 

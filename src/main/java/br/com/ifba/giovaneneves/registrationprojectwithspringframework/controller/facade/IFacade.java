@@ -1,4 +1,4 @@
-package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller;
+package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller.facade;
 
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.ExistingRegistrationNumberException;

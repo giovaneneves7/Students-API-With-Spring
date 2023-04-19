@@ -1,5 +1,6 @@
 package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller;
 
+import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Grade;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repositories.StudentRepository;
@@ -12,30 +13,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
+@RequestMapping("/student")
 public class StudentController {
 
     @Autowired
     StudentRepository studentRepository;
 
-    @GetMapping("/students")
+    @GetMapping("/list")
     public String listStudents(Model model){
 
-        String tableName = "Students List";
-        System.out.println("Chegou aqui");
-        model.addAttribute("tableStudents", tableName);
-        System.out.println("Chegou aqui também ");
         model.addAttribute("students", studentRepository.findAll());
-        System.out.println("Chegou aqui também 2");
 
-        for(Student student : studentRepository.findAll()){
-            System.out.println("Opa, olha o: " + student.getName());
-        }
-
-        return "students";
+        return "students-list";
     }
 
-    @RequestMapping("/")
-    public String index(){
-        return "students";
+    @GetMapping("/new")
+    public String createNewStudent(Model model){
+
+        model.addAttribute("student", new Student());
+
+        return "create-new-student";
     }
 }
