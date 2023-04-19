@@ -11,34 +11,48 @@
 </head>
 <body>
 
-<table id="studentsTable">
+    <div th:insert="fragments/nav :: nav"></div>
 
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Registration Number</th>
-        <th>Academic Year</th>
-        <th>Average grades</th>
-    </tr>
-    </thead>
-    <tbody>
+    <table class="table table-sm">
 
-       <tr th:if="${students == null}">
-            <td colspan="2">Empty Table</td>
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Registration Number</th>
+            <th>Academic Year</th>
+            <th>Grade 01</th>
+            <th>Grade 02</th>
+            <th>Grade 03</th>
+            <th>Average grades</th>
         </tr>
+        </thead>
+        <tbody>
 
-        <tr th:each="student : ${students}">
-            <td th:text="${student.id}"></td>
-            <td th:text="${student.name}"></td>
-            <td th:text="${student.registrationNumber}"></td>
-            <td th:text="${student.academicYear}"></td>
-            <td th:text="${student.averageGrades}"></td>
+           <tr th:if="${students == null}">
+                <td colspan="2">Empty Table</td>
+            </tr>
 
-        </tr>
-    </tbody>
+            <tr th:each="student : ${students}">
+                <td><span th:text="${student.id}">Id</span></td>
+                <td><span th:text="${student.name}">Name</span></td>
+                <td><span th:text="${student.registrationNumber}">Registration Number</span></td>
+                <td><span th:text="${#dates.format(student.birthDate, 'MM/dd/yyyy')}">Birth Date</span></td>
+                <td><span th:text="${student.academicYear}">Academic Year</span></td>
+                <td><span th:text="${student.grade.grade1}">Grade 01</span></td>
+                <td><span th:text="${student.grade.grade2}">Grade 02</span></td>
+                <td><span th:text="${student.grade.grade3}">Grade 03</span></td>
+                <td><span th:text="${student.averageGrades}">Average Grades</span></td>
+                <td>
+                    <a class="btn btn-outline-danger btn-sm" th:href="@{/student/delete/{id}(id=${student.id})}"
+                       th:data-confirm-delete="|Are you sure you want to delete ${student.name}?|"
+                       onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a>
+                </td>
 
-</table>
+            </tr>
+        </tbody>
 
-</body>
+    </table>
+
+    </body>
 </html>
