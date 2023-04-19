@@ -1,12 +1,24 @@
 package br.com.ifba.giovaneneves.registrationprojectwithspringframework.model;
 
-import jakarta.annotation.Nullable;
-import jakarta.persistence.*;
+import jakarta.persistence.Table;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Basic;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.Column;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.TemporalType;
+
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
 
 /**
  *
@@ -19,23 +31,29 @@ import java.time.LocalDate;
 public class Student extends AbstractEntity{
 
     //============================================{ ATTRIBUTES }============================================//
-    @Column(nullable = false)
+
+    @NotNull
+    @Size(min = 4, message = "Student name cannot be less than 4 characters")
     public String name;
 
     @Column(nullable = false, unique = true)
+    @Size(max = 4, message = "Registration Number cannot have more than 4 characters")
     public String registrationNumber;
 
-    @Column(nullable = false)
-    public int age;
+    @Basic
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
+    @NotNull
+    public Date birthDate;
 
-    @Column(nullable = false)
+    @NotNull
     public int academicYear;
 
-   /* @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grade_id")
-    public Grade grade;*/
+    public Grade grade;
 
-    @Column(nullable = false)
+    @NotNull
     public float averageGrades;
 
 
