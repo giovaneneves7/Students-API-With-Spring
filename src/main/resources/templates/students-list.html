@@ -21,6 +21,7 @@
             <th>Name</th>
             <th>Registration Number</th>
             <th>Academic Year</th>
+            <th>Birth Date</th>
             <th>Grade 01</th>
             <th>Grade 02</th>
             <th>Grade 03</th>
@@ -43,12 +44,17 @@
                 <td><span th:text="${student.grade.grade2}">Grade 02</span></td>
                 <td><span th:text="${student.grade.grade3}">Grade 03</span></td>
                 <td><span th:text="${student.averageGrades}">Average Grades</span></td>
+                <!-- Delete Button -->
                 <td>
                     <a class="btn btn-outline-danger btn-sm" th:href="@{/student/delete/{id}(id=${student.id})}"
                        th:data-confirm-delete="|Are you sure you want to delete ${student.name}?|"
                        onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a>
                 </td>
 
+                <!-- Edit Button -->
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" th:href="@{/student/edit/{id}(id=${student.id})}">Edit</a>
+                </td>
             </tr>
         </tbody>
 

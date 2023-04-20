@@ -4,11 +4,51 @@
     <meta charset="UTF-8">
     <title>OOP Project With Spring</title>
 
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.0-alpha3-dist/css/bootstrap.min.css}">
+    <script th:src="@{/jquery-3.6.0/jquery-3.6.0.min.js}"></script>
+    <script th:src="@{/bootstrap-5.3.0-alpha3-dist/js/bootstrap.min.js}"></script>
+
 </head>
 <body>
 
-    <div th:replace="fragments/nav :: nav"></div>
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+            <div class="row d-flex align-items-center justify-content-center h-100">
+                <div class="col-md-8 col-lg-7 col-xl-6">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
+                         class="img-fluid" alt="Phone image">
+                </div>
+                <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
+                    <form th:action="@{/user/validate(email=${user.email},password=${user.password})}" th:object="${user}" method="get">
 
-    <h1>WELCOME,</h1>
+                    <!-- Email input -->
+                        <div class="form-outline mb-4">
+                            <input type="email" id="form1Example13" class="form-control form-control-lg" th:field="*{email}" />
+                            <label class="form-label" for="form1Example13">Email address</label>
+                        </div>
+
+                        <!-- Password input -->
+                        <div class="form-outline mb-4">
+                            <input type="password" id="form1Example23" class="form-control form-control-lg" th:field="*{password}" />
+                            <label class="form-label" for="form1Example23">Password</label>
+                        </div>
+
+                        <div class="d-flex justify-content-around align-items-center mb-4">
+                            <!-- Checkbox -->
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
+                                <label class="form-check-label" for="form1Example3"> Remember me </label>
+                            </div>
+                            <a href="#!">Forgot password?</a>
+                        </div>
+
+                        <!-- Submit button -->
+                        <input class="btn btn-primary" type="submit" value="Sign Up">
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
