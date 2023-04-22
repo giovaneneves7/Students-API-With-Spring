@@ -17,7 +17,7 @@ public class LoadData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        List<String> roles = List.of("Student", "Admin", "Moderator");
+        List<String> roles = List.of("Student", "Teacher", "Moderator", "Admin");
 
         for(String roleStr : roles){
             Role role = roleRepository.findByRole(roleStr);
