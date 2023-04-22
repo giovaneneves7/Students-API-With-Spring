@@ -11,13 +11,15 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 
 @Data
 @Service
-public class StudentService {
+public class StudentService implements IStudentService{
+
 
     //============================================{ ATTRIBUTES }============================================//
 
@@ -31,10 +33,6 @@ public class StudentService {
 
     //============================================{ GETTERS AND SETTERS }============================================//
 
-    public StudentService(){
-
-    }
-
 
     //============================================{ METHODS }============================================//
     /**
@@ -42,7 +40,7 @@ public class StudentService {
      * Inserts a student in the database
      * @param student to be added to the database.
      */
-    public void saveStudent(Student student) throws ExistingRegistrationNumberException, InvalidRegistrationNumberException, InvalidAgeException {
+    public boolean saveStudent(Student student) throws ExistingRegistrationNumberException, InvalidRegistrationNumberException, InvalidAgeException {
 
         //--+ Checks if there is already a student with the same enrollment number in the database +--//
         if(studentRepository.findAll().stream()
@@ -54,10 +52,12 @@ public class StudentService {
             throw new InvalidRegistrationNumberException(REGISTRATION_NUMBER_INVALID_LENGTH);
 
         //--+ Checks if the student is older than 13  +--//
-     /*   if(student.getAge() < 13)
-            throw new InvalidAgeException(INVALID_AGE);*/
+        if((LocalDate.now().getYear() - student.getBirthDate().getYear()) < 13)
+            throw new InvalidAgeException(INVALID_AGE);
 
         studentRepository.save(student);
+
+        return true;
 
     }
 
@@ -67,14 +67,14 @@ public class StudentService {
      * @param id of the student to be searched.
      * @return student with the specified ID.
      */
-    public Optional<Student> findStudentById(long id) throws StudentNotFoundException{
-        Optional<Student> foundStudent = studentRepository.findById(id);
+    public Student findStudentById(long id) throws StudentNotFoundException{
+        Optional<Student> foundStudent = this.studentRepository.findById(id);
 
         //--+ Checks if there is a student with the specified id +--//
         if(!foundStudent.isPresent())
             throw new StudentNotFoundException(STUDENT_NOT_FOUND);
 
-        return foundStudent;
+        return foundStudent.get();
 
     }
 
@@ -82,7 +82,7 @@ public class StudentService {
      * List all students.
      * @return a list with all students in the database.
      */
-    public List<Student> listAllStudents(){
+    public List<Student> findAllStudents(){
 
         return this.studentRepository.findAll();
 
@@ -93,25 +93,28 @@ public class StudentService {
      * @param id of the student to be removed from the database.
      * @return true if the student exists, false otherwise.
      */
-    public void removeStudent(long id) throws StudentNotFoundException {
+    public boolean deleteStudentById(long id) throws StudentNotFoundException {
 
         Optional<Student> foundStudent = studentRepository.findById(id);
 
         //--+ Checks if there is a student with the specified id +--//
         if(!foundStudent.isPresent())
             throw new StudentNotFoundException(STUDENT_NOT_FOUND);
+
         Student student = foundStudent.get();
 
         this.studentRepository.deleteById(student.getId());
 
+        return true;
     }
+
 
     /**
      *
      * @param student to be updated.
      * @return true if the student exists in the database and the update was successful, false otherwise.
      */
-    public void updateStudent(Student student) throws StudentNotFoundException {
+    public boolean updateStudent(Student student) throws StudentNotFoundException {
 
         //--+ Checks if the student is contained in the database +--//
         if(!studentRepository.findAll().contains(student))
@@ -119,6 +122,7 @@ public class StudentService {
 
         this.studentRepository.save(student);
 
+        return true;
     }
 
 
