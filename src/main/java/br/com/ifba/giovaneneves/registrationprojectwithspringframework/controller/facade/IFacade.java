@@ -31,7 +31,7 @@ public interface IFacade {
      * List all students.
      * @return a list with all students in the database.
      */
-    List<Student> listAllStudents();
+    List<Student> findAllStudents();
 
     /**
      *

@@ -9,9 +9,13 @@ import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exception
 
 import java.util.List;
 
-public class Facade implements IFacade {
 
-    private final StudentService studentService = new StudentService();
+public class Facade implements IFacade {
+    private StudentService studentService;
+
+    public Facade(){
+        this.studentService = new StudentService();
+    }
 
     /**
      *
@@ -39,8 +43,8 @@ public class Facade implements IFacade {
      * @return a list with all students in the database.
      */
     @Override
-    public List<Student> listAllStudents() {
-        return studentService.listAllStudents();
+    public List<Student> findAllStudents() {
+        return studentService.findAllStudents();
     }
 
     /**
@@ -50,7 +54,7 @@ public class Facade implements IFacade {
      */
     @Override
     public boolean removeStudent(int id) throws StudentNotFoundException {
-        return studentService.removeStudent(id);
+        return studentService.deleteStudentById(id);
     }
 
     /**
