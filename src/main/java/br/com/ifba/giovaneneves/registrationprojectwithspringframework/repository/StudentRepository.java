@@ -1,6 +1,6 @@
-package br.com.ifba.giovaneneves.registrationprojectwithspringframework.student.repository;
+package br.com.ifba.giovaneneves.registrationprojectwithspringframework.repository;
 
-import br.com.ifba.giovaneneves.registrationprojectwithspringframework.student.model.Student;
+import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
