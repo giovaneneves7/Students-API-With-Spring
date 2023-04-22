@@ -1,6 +1,5 @@
 package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controller;
 
-import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.StudentNotFoundException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repository.StudentRepository;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/student")
@@ -41,7 +41,7 @@ public class StudentController {
     }
 
     @PostMapping("/save")
-    public String save(@Valid Student student, BindingResult results, RedirectAttributes attributes){
+    public String saveStudent(@Valid Student student, BindingResult results, RedirectAttributes attributes){
 
         if(results.hasErrors()){
             return "/create-new-student";
@@ -49,14 +49,19 @@ public class StudentController {
 
         studentRepository.save(student);
         attributes.addFlashAttribute("message", "Student successfully saved!");
+
         return "redirect:/student/new";
     }
 
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") int id, Model model) throws StudentNotFoundException {
+    public String deleteStudent(@PathVariable("id") long id, Model model) {
 
-        Student student = studentRepository.findById(id)
-                .orElseThrow(() -> new StudentNotFoundException("Invalid Id!"));
+        Optional<Student> foundStudent = studentRepository.findById(id);
+
+        if(!foundStudent.isPresent())
+            return "redirect:/student/list";
+
+        Student student = foundStudent.get();
 
         studentRepository.delete(student);
 
@@ -64,10 +69,11 @@ public class StudentController {
     }
 
     @GetMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, Model model) throws StudentNotFoundException{
+    public String edit(@PathVariable("id") long id, Model model) {
 
-        Student student = studentRepository.findById(id)
-                .orElseThrow( () -> new StudentNotFoundException("Invalid id"));
+        Optional<Student> foundStudent = studentRepository.findById(id);
+
+        Student student = foundStudent.get();
 
         model.addAttribute("student", student);
 
@@ -75,7 +81,7 @@ public class StudentController {
     }
 
     @PostMapping("/edit/{id}")
-    public String edit(@PathVariable("id") int id, @Valid Student student, BindingResult results){
+    public String edit(@PathVariable("id") long id, @Valid Student student, BindingResult results){
 
         if(results.hasErrors()){
             student.setId(id);
@@ -83,6 +89,7 @@ public class StudentController {
         }
 
         studentRepository.save(student);
+
         return "redirect:/student/list";
     }
 }
