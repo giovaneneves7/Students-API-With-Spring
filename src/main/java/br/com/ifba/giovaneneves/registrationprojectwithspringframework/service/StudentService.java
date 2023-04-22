@@ -1,6 +1,5 @@
 package br.com.ifba.giovaneneves.registrationprojectwithspringframework.service;
 
-import br.com.ifba.giovaneneves.registrationprojectwithspringframework.dao.StudentDAOImpl;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.ExistingRegistrationNumberException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.InvalidAgeException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.InvalidRegistrationNumberException;
@@ -10,13 +9,14 @@ import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Stu
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repositories.StudentRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
 
 @Data
+@Service
 public class StudentService {
 
     //============================================{ ATTRIBUTES }============================================//
@@ -67,7 +67,7 @@ public class StudentService {
      * @param id of the student to be searched.
      * @return student with the specified ID.
      */
-    public Optional<Student> findStudentById(int id) throws StudentNotFoundException{
+    public Optional<Student> findStudentById(long id) throws StudentNotFoundException{
         Optional<Student> foundStudent = studentRepository.findById(id);
 
         //--+ Checks if there is a student with the specified id +--//
@@ -93,7 +93,7 @@ public class StudentService {
      * @param id of the student to be removed from the database.
      * @return true if the student exists, false otherwise.
      */
-    public void removeStudent(int id) throws StudentNotFoundException {
+    public void removeStudent(long id) throws StudentNotFoundException {
 
         Optional<Student> foundStudent = studentRepository.findById(id);
 
