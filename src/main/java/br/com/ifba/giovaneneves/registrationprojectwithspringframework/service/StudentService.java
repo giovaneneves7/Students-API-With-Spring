@@ -6,7 +6,7 @@ import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exception
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.StudentNotFoundException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 
-import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repositories.StudentRepository;
+import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repository.StudentRepository;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
