@@ -7,11 +7,7 @@ import lombok.Data;
 @Entity
 @Table(name="grades")
 @Data
-public class Grade {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    int id;
+public class Grade extends AbstractEntity{
 
     private float grade1;
     private float grade2;
