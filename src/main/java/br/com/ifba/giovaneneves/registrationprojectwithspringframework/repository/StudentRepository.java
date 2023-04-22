@@ -1,4 +1,4 @@
-package br.com.ifba.giovaneneves.registrationprojectwithspringframework.repositories;
+package br.com.ifba.giovaneneves.registrationprojectwithspringframework.repository;
 
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
 
