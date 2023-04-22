@@ -2,7 +2,7 @@ package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controll
 
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.exceptions.student.StudentNotFoundException;
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.Student;
-import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repositories.StudentRepository;
+import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repository.StudentRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

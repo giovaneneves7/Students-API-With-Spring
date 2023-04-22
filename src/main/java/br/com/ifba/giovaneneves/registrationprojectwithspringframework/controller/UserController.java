@@ -2,7 +2,7 @@ package br.com.ifba.giovaneneves.registrationprojectwithspringframework.controll
 
 
 import br.com.ifba.giovaneneves.registrationprojectwithspringframework.model.User;
-import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repositories.UserRepository;
+import br.com.ifba.giovaneneves.registrationprojectwithspringframework.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
