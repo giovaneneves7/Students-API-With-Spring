@@ -57,22 +57,6 @@
           </div>
         </div>
 
-        <!-- Cheackbox roles -->
-        <div class="row mb-3">
-
-          <label class="col-sm-1 col-form-label">Roles:</label>
-          <div class="col-sm-2">
-            <th:block th:each="rl : ${roles}">
-              <div th:if="${#lists.contains(user.roles, rl)}" class="form-check">
-                <input class="form-check-input" type="checkbox" name="rls" th:value="${rl.id}" />
-                <label class="form-check-label" th:text="rl.role"></label>
-
-              </div>
-            </th:block>
-          </div>
-
-        </div>
-
         <input class="btn btn-primary" type="submit" value="Update">
 
       </form>

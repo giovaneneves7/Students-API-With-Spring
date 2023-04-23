@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <table class="table table-sm">
+  <table class="table table-sm my-table">
 
     <thead>
     <tr>
@@ -19,6 +19,9 @@
       <th>Name</th>
       <th>Email</th>
       <th>Role</th>
+      <th>Delete</th>
+      <th>Edit</th>
+      <th>Roles</th>
     </tr>
     </thead>
     <tbody>
@@ -31,7 +34,7 @@
       <td><span th:text="${user.id}">Id</span></td>
       <td><span th:text="${user.name}">Name</span></td>
       <td><span th:text="${user.email}">Email</span></td>
-      <td><span th:text="${user.roles.get(0)}">Role</span></td>
+      <td><span th:text="${user.roles.isEmpty() ? 'Empty' : user.roles.get(0).getRole() }">Role</span></td>
       <!-- Delete Button -->
       <td>
         <a class="btn btn-outline-danger btn-sm" th:href="@{/user/delete/{id}(id=${user.id})}"
