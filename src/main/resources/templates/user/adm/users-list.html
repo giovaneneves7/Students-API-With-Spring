@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users List</title>
+
+  <link rel="stylesheet" th:href="@{/bootstrap-5.3.0-alpha3-dist/css/bootstrap.min.css}">
+  <script th:src="@{/jquery-3.6.0/jquery-3.6.0.min.js}"></script>
+  <script th:src="@{/bootstrap-5.3.0-alpha3-dist/js/bootstrap.min.js}"></script>
+
+</head>
+<body>
+
+  <table class="table table-sm">
+
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+    </tr>
+    </thead>
+    <tbody>
+
+    <tr th:if="${users == null}">
+      <td colspan="2">Empty Table</td>
+    </tr>
+
+    <tr th:each="user : ${users}">
+      <td><span th:text="${user.id}">Id</span></td>
+      <td><span th:text="${user.name}">Name</span></td>
+      <td><span th:text="${user.email}">Email</span></td>
+      <td><span th:text="${user.roles.get(0)}">Role</span></td>
+      <!-- Delete Button -->
+      <td>
+        <a class="btn btn-outline-danger btn-sm" th:href="@{/user/delete/{id}(id=${user.id})}"
+           th:data-confirm-delete="|Are you sure you want to delete ${user.name}?|"
+           onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a>
+      </td>
+
+      <!-- Edit Button -->
+      <td>
+        <a class="btn btn-outline-primary btn-sm" th:href="@{/user/edit/{id}(id=${user.id})}">Edit</a>
+      </td>
+
+      <!-- Roles Button -->
+      <td>
+        <a class="btn btn-outline-primary btn-sm" th:href="@{/user/edit-role/{id}(id=${user.id})}">Roles</a>
+      </td>
+    </tr>
+    </tbody>
+
+  </table>
+</body>
+</html>
