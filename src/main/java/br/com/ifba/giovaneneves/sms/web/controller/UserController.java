@@ -50,7 +50,7 @@ public class UserController {
         if(results.hasErrors())
             return "user/public/create-new-user-account";
 
-        Role defaultRole = roleRepository.findByRole("Student");
+        Role defaultRole = roleRepository.findByRole("USER");
 
         List<Role> roles = List.of(defaultRole);
 
@@ -119,9 +119,24 @@ public class UserController {
 
         User user = oldUser.get();
         model.addAttribute("user", user);
-        model.addAttribute("roles", roleRepository.findAll());
+        model.addAttribute("rolesList", roleRepository.findAll());
 
         return "user/adm/edit-user-roles";
 
+    }
+
+    @PostMapping("/edit-role/{id}")
+    public String editRoles(@PathVariable("id") long userId,
+                            @RequestParam(value = "rls", required = false) int roles[], User user,
+                            RedirectAttributes attributes){
+
+        if(roles == null){
+            user.setId(userId);
+            attributes.addFlashAttribute("message", "You must select at least 1 role");
+            return "redirect:/user/edit-role/" + userId;
+        }
+
+
+        return "";
     }
 }
