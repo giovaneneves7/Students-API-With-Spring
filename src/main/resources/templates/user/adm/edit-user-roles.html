@@ -16,13 +16,13 @@
         <div class="row">
             <div class="col">
 
-                <h2>Create a New Account</h2>
+                <h2>Update An Account</h2>
                 <div class="alert alert-success alert-dismissible fade show" th:if="${message}">
                     <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     <span th:text="${message}"></span>
                 </div>
 
-                <form action="#" th:action="@{/user/save}" th:object="${user}" method="post">
+                <form action="#" th:action="@{/user/edit-role/{id}(id=${user.id})}" th:object="${user}" method="post">
 
                     <!-- Name Row -->
                     <div class="row mb-3">
@@ -62,11 +62,14 @@
 
                         <label class="col-sm-1 col-form-label">Roles:</label>
                         <div class="col-sm-2">
-                            <th:block th:each="rl : ${roles}">
+                            <th:block th:each="rl : ${rolesList}">
                                 <div th:if="${#lists.contains(user.roles, rl)}" class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="rls" th:value="${rl.id}" />
-                                    <label class="form-check-label" th:text="rl.role"></label>
-
+                                    <input class="form-check-input" type="checkbox" name="rls" th:value="${rl.id}" checked>
+                                    <label class="form-check-label"><span th:text="${rl.role}"></span></label>
+                                </div>
+                                <div th:unless="${#lists.contains(user.roles, rl)}" class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="rls" th:value="${rl.id}">
+                                    <label class="form-check-label" th:text="${rl.role}"></label>
                                 </div>
                             </th:block>
                         </div>
