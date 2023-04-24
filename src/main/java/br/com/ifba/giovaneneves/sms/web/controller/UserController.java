@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -127,16 +128,37 @@ public class UserController {
 
     @PostMapping("/edit-role/{id}")
     public String editRoles(@PathVariable("id") long userId,
-                            @RequestParam(value = "rls", required = false) int roles[], User user,
+                            @RequestParam(value = "rls", required = false) int[] roles, User user,
                             RedirectAttributes attributes){
 
+        //---+ Checks if at least one role has been selected --+//
         if(roles == null){
             user.setId(userId);
             attributes.addFlashAttribute("message", "You must select at least 1 role");
-            return "redirect:/user/edit-role/" + userId;
+            return "redirect:/user/edit-role/".concat(String.valueOf(userId));
+        } else{
+            List<Role> roleList = new ArrayList<>();
+
+            for(int i = 0; i < roles.length; i++){
+
+                long roleId = roles[i];
+                Optional<Role> optionalRole = roleRepository.findById(roleId);
+
+                if(optionalRole.isPresent()){
+                    Role role = optionalRole.get();
+                    roleList.add(role);
+                }
+
+            }
+
+            Optional<User> optionalUser = userRepository.findById(userId);
+            if(optionalUser.isPresent()){
+                User usr = optionalUser.get();
+                usr.setRoles(roleList);
+                userRepository.save(usr);
+            }
         }
 
-
-        return "";
+        return "redirect:/user/list";
     }
 }
