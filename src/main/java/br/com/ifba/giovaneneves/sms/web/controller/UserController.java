@@ -1,5 +1,6 @@
 package br.com.ifba.giovaneneves.sms.web.controller;
 
+//============================================{ IMPORTS }============================================//
 
 import br.com.ifba.giovaneneves.sms.user.model.User;
 import br.com.ifba.giovaneneves.sms.user.dao.UserRepository;
@@ -17,15 +18,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+//============================================{ END IMPORTS }============================================//
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
+    //============================================{ ATTRIBUTES }============================================//
+
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
+
+    //============================================{ METHODS }============================================//
 
     @GetMapping("/validate")
     public String cofirmLogin(@RequestParam("email") String email, @RequestParam("password") String password){
@@ -43,13 +49,13 @@ public class UserController {
 
         model.addAttribute("user", new User());
 
-        return "user/public/create-new-user-account";
+        return "auth/user/public/create-new-user-account";
     }
     @PostMapping("/save")
     public String save(@Valid User user, BindingResult results, RedirectAttributes attributes){
 
         if(results.hasErrors())
-            return "user/public/create-new-user-account";
+            return "auth/user/public/create-new-user-account";
 
         Role defaultRole = roleRepository.findByRole("USER");
 
@@ -68,12 +74,12 @@ public class UserController {
         Optional<User> foundUser = userRepository.findById(id);
 
         if(!foundUser.isPresent())
-            return "user/adm/users-list";
+            return "auth/user/adm/users-list";
 
         User user = foundUser.get();
         userRepository.delete(user);
 
-        return "redirect:user/adm/users-list";
+        return "redirect:auth/user/adm/users-list";
     }
 
     @GetMapping("/edit/{id}")
@@ -82,13 +88,13 @@ public class UserController {
         Optional<User> foundUser = userRepository.findById(id);
 
         if(!foundUser.isPresent())
-            return "redirect:user/adm/users-list";
+            return "redirect:auth/user/adm/users-list";
 
         User user = foundUser.get();
 
         model.addAttribute("user", user);
 
-        return "user/adm/edit-user";
+        return "auth/user/adm/edit-user";
     }
 
     @PostMapping("/edit/{id}")
@@ -96,19 +102,19 @@ public class UserController {
 
         if(results.hasErrors()){
             user.setId(id);
-            return "user/adm/edit-user";
+            return "auth/user/adm/edit-user";
         }
 
         userRepository.save(user);
 
-        return "redirect:user/adm/users-list";
+        return "redirect:auth/user/adm/users-list";
     }
     @GetMapping("/list")
     public String list(Model model){
 
         model.addAttribute("users", userRepository.findAll());
 
-        return "user/adm/users-list";
+        return "auth/user/adm/users-list";
     }
     @GetMapping("/edit-role/{id}")
     public String editRoles(@PathVariable("id") long id, Model model){
@@ -116,13 +122,13 @@ public class UserController {
         Optional<User> oldUser = userRepository.findById(id);
 
         if(!oldUser.isPresent())
-            return "user/adm/users-list";
+            return "auth/user/adm/users-list";
 
         User user = oldUser.get();
         model.addAttribute("user", user);
         model.addAttribute("rolesList", roleRepository.findAll());
 
-        return "user/adm/edit-user-roles";
+        return "auth/user/adm/edit-user-roles";
 
     }
 
@@ -151,10 +157,12 @@ public class UserController {
 
             }
 
+            //--+ Saves user with new roles and status in the database +--//
             Optional<User> optionalUser = userRepository.findById(userId);
             if(optionalUser.isPresent()){
                 User usr = optionalUser.get();
                 usr.setRoles(roleList);
+                usr.setActive(user.isActive());
                 userRepository.save(usr);
             }
         }

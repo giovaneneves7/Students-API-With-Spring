@@ -29,7 +29,7 @@ public class StudentController {
 
         model.addAttribute("students", studentRepository.findAll());
 
-        return "student/adm/students-list";
+        return "auth/student/adm/students-list";
     }
 
     @GetMapping("/new")
@@ -37,14 +37,14 @@ public class StudentController {
 
         model.addAttribute("student", new Student());
 
-        return "student/adm/create-new-student";
+        return "auth/student/adm/create-new-student";
     }
 
     @PostMapping("/save")
     public String saveStudent(@Valid Student student, BindingResult results, RedirectAttributes attributes){
 
         if(results.hasErrors()){
-            return "student/adm/create-new-student";
+            return "auth/student/adm/create-new-student";
         }
 
         studentRepository.save(student);
@@ -77,7 +77,7 @@ public class StudentController {
 
         model.addAttribute("student", student);
 
-        return "student/adm/edit-student";
+        return "auth/student/adm/edit-student";
     }
 
     @PostMapping("/edit/{id}")
@@ -85,7 +85,7 @@ public class StudentController {
 
         if(results.hasErrors()){
             student.setId(id);
-            return "student/adm/edit-student";
+            return "auth/student/adm/edit-student";
         }
 
         studentRepository.save(student);
