@@ -22,6 +22,11 @@ import java.util.List;
 @Data
 public class User extends AbstractEntity {
 
+    public User(){
+        super();
+        this.setActive(false);
+    }
+
     @NotNull(message = "user cannot be empty")
     private String name;
 
@@ -36,5 +41,7 @@ public class User extends AbstractEntity {
                joinColumns = @JoinColumn(name = "user_id"),
                inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
+
+    private boolean active;
 
 }
