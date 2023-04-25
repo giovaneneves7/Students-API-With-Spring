@@ -25,6 +25,7 @@
       <th class="col-1">Name</th>
       <th class="col-1">Email</th>
       <th class="col-1">Roles</th>
+      <th class="col-1">Status</th>
       <th class="col-1">Delete</th>
       <th class="col-1">Edit</th>
       <th class="col-1">Manage Roles</th>
@@ -46,22 +47,23 @@
             <span th:text="${rl.role}">Roles</span> <br/>
           </th:block>
         </td>
+        <td class="col-1"><span th:text="${user.active} ? 'ACTIVE' : 'INACTIVE'">Active?</span></td>
 
         <!-- Delete Button -->
         <td class="col-1">
-          <a class="btn btn-outline-danger btn-sm" th:href="@{/user/delete/{id}(id=${user.id})}"
+          <a class="btn btn-outline-danger btn-sm" th:href="@{/templates/auth/user/delete/{id}(id=${user.id})}"
              th:data-confirm-delete="|Are you sure you want to delete ${user.name}?|"
              onclick="if(!confirm(this.getAttribute('data-confirm-delete'))) return false">Delete</a>
         </td>
 
         <!-- Edit Button -->
         <td class="col-1">
-          <a class="btn btn-outline-primary btn-sm" th:href="@{/user/edit/{id}(id=${user.id})}">Edit</a>
+          <a class="btn btn-outline-primary btn-sm" th:href="@{/templates/auth/user/edit/{id}(id=${user.id})}">Edit</a>
         </td>
 
         <!-- Manage Roles Button -->
         <td class="col-1">
-          <a class="btn btn-outline-warning btn-sm" th:href="@{/user/edit-role/{id}(id=${user.id})}">Manage Roles</a>
+          <a class="btn btn-outline-warning btn-sm" th:href="@{/templates/auth/user/edit-role/{id}(id=${user.id})}">Manage Roles</a>
         </td>
       </tr>
 

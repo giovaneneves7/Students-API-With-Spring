@@ -4,9 +4,17 @@
     <meta charset="UTF-8">
     <title>Edit Roles</title>
 
+    <!-- Bootstrap and JQuery import -->
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.0-alpha3-dist/css/bootstrap.min.css}">
     <script th:src="@{/jquery-3.6.0/jquery-3.6.0.min.js}"></script>
     <script th:src="@{/bootstrap-5.3.0-alpha3-dist/js/bootstrap.min.js}"></script>
+
+    <!-- Local Style -->
+    <style>
+        .message{
+            color: #FF0000;
+        }
+    </style>
 
 </head>
 <body>
@@ -16,19 +24,16 @@
         <div class="row">
             <div class="col">
 
+                <!-- Form tittle -->
                 <h2>Update An Account</h2>
-                <div class="alert alert-success alert-dismissible fade show" th:if="${message}">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                    <span th:text="${message}"></span>
-                </div>
 
-                <form action="#" th:action="@{/user/edit-role/{id}(id=${user.id})}" th:object="${user}" method="post">
+                <form action="#" th:action="@{/templates/auth/user/edit-role/{id}(id=${user.id})}" th:object="${user}" method="post">
 
                     <!-- Name Row -->
                     <div class="row mb-3">
                         <label class="col-sm-1 col-form-label">Name:</label>
                         <div class="col-sm-5">
-                            <input class="form-control" type="text" th:field="*{name}">
+                            <input class="form-control" type="text" th:field="*{name}" disabled>
                         </div>
                         <div class="col-sm-5">
                             <span class="message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
@@ -39,7 +44,7 @@
                     <div class="row mb-3">
                         <label class="col-sm-1 col-form-label">Email:</label>
                         <div class="col-sm-3">
-                            <input class="form-control" type="email" th:field="*{email}">
+                            <input class="form-control" type="email" th:field="*{email}" disabled>
                         </div>
                         <div class="col-sm-5">
                             <span class="message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
@@ -50,14 +55,29 @@
                     <div class="row mb-3">
                         <label class="col-sm-1 col-for-label">Password:</label>
                         <div class="col-sm-2">
-                            <input class="form-control" type="text" th:field="*{password}">
+                            <input class="form-control" type="password" th:field="*{password}" disabled>
                         </div>
                         <div class="col-sm-5">
                             <span class="message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
                         </div>
                     </div>
 
-                    <!-- Cheackbox roles -->
+                    <!-- Status radio -->
+                    <div class="row mb-3">
+                        <label class="col-sm-1 ">Status:</label>
+                        <div class="col-sm-2">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" value="true" th:field="*{active}">
+                                <label class="form-check-label">Active</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="for-check-input" type="radio" value="false" th:field="*{active}">
+                                <label class="form-check-label">Inactive</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Roles checkbox -->
                     <div class="row mb-3">
 
                         <label class="col-sm-1 col-form-label">Roles:</label>
@@ -76,6 +96,12 @@
 
                     </div>
 
+                    <!-- Error message -->
+                    <div class="col-sm-5">
+                        <span class="message" th:if="${message}" th:text="${message}"></span>
+                    </div>
+
+                    <!-- Submit Button -->
                     <input class="btn btn-primary" type="submit" value="Update">
 
                 </form>
