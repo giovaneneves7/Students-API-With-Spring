@@ -1,4 +1,4 @@
-package br.com.ifba.giovaneneves.sms.web.controller.facade;
+package br.com.ifba.giovaneneves.sms.infrastructure.facade;
 
 public class FacadeInstance {
 

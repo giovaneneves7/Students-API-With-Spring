@@ -1,4 +1,4 @@
-package br.com.ifba.giovaneneves.sms.web.controller.facade;
+package br.com.ifba.giovaneneves.sms.infrastructure.facade;
 
 import br.com.ifba.giovaneneves.sms.student.model.Student;
 import br.com.ifba.giovaneneves.sms.student.service.StudentService;
