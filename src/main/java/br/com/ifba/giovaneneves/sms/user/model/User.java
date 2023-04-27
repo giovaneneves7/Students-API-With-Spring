@@ -1,13 +1,9 @@
 package br.com.ifba.giovaneneves.sms.user.model;
 
+//============================================{ IMPORTS }============================================//
 import br.com.ifba.giovaneneves.sms.infrastructure.model.AbstractEntity;
 import br.com.ifba.giovaneneves.sms.user.role.model.Role;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.JoinColumn;
+import jakarta.persistence.*;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -16,6 +12,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.util.List;
+//============================================{ END IMPORTS }============================================//
 
 @Entity
 @Table(name="users")

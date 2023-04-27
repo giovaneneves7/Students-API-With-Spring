@@ -1,20 +1,22 @@
 package br.com.ifba.giovaneneves.sms.student.service;
 
+//============================================{ IMPORTS }============================================//
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.ExistingRegistrationNumberException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidAgeException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidRegistrationNumberException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.StudentNotFoundException;
+import br.com.ifba.giovaneneves.sms.student.dao.StudentRepository;
 import br.com.ifba.giovaneneves.sms.student.model.Student;
 
-import br.com.ifba.giovaneneves.sms.student.dao.StudentRepository;
 import lombok.Data;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-
+//============================================{ END IMPORTS }============================================//
 
 @Data
 @Service
@@ -30,9 +32,6 @@ public class StudentService implements IStudentService {
 
     @Autowired
     private StudentRepository studentRepository;
-
-    //============================================{ GETTERS AND SETTERS }============================================//
-
 
     //============================================{ METHODS }============================================//
     /**
@@ -64,7 +63,7 @@ public class StudentService implements IStudentService {
     /**
      *
      * Search a student in the database
-     * @param id of the student to be searched.
+     * @param id The ID of the student to be searched.
      * @return student with the specified ID.
      */
     public Student findStudentById(long id) throws StudentNotFoundException{
