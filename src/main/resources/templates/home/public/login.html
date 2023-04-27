@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+
     <meta charset="UTF-8">
     <title>Student Management System (SMS)</title>
 
@@ -16,12 +17,11 @@
     <!-- Navbar fragment -->
     <div th:insert="~{fragments/nav :: nav}"></div>
 
-    <section class="vh-100">
+    <section class="vh-100 p-3">
         <div class="container py-5 h-100">
             <div class="row d-flex align-items-center justify-content-center h-100">
                 <div class="col-md-8 col-lg-7 col-xl-6">
-                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg"
-                         class="img-fluid" alt="Phone image">
+                    <img src="https://bit.ly/445Mpwq" class="img-fluid" alt="Logo">
                 </div>
                 <div class="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
                     <form th:action="@{/templates/auth/user/validate(email=${user.email},password=${user.password})}" th:object="${user}" method="get">
