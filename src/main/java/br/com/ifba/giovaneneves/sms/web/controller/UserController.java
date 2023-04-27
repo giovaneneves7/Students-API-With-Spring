@@ -1,13 +1,15 @@
 package br.com.ifba.giovaneneves.sms.web.controller;
 
 //============================================{ IMPORTS }============================================//
-
+import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.user.UserNotFoundException;
 import br.com.ifba.giovaneneves.sms.user.model.User;
 import br.com.ifba.giovaneneves.sms.user.dao.UserRepository;
-
 import br.com.ifba.giovaneneves.sms.user.role.dao.RoleRepository;
 import br.com.ifba.giovaneneves.sms.user.role.model.Role;
+
+import br.com.ifba.giovaneneves.sms.user.service.UserService;
 import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +27,21 @@ import java.util.Optional;
 public class UserController {
 
     //============================================{ ATTRIBUTES }============================================//
+    public final String LOGIN_PAGE = "home/public/login";
+    public final String CREATE_NEW_USER_PAGE = "auth/user/public/create-new-user-account";
+    public final String USER_LIST_PAGE = "auth/user/adm/users-list";
+    public final String NEW_USER_REQUEST = "/user/new";
+    public final String USER_LIST_REQUEST = "/user/list";
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     UserRepository userRepository;
     @Autowired
     RoleRepository roleRepository;
 
-    //============================================{ METHODS }============================================//
+    //============================================{ MAP }============================================//
 
     @GetMapping("/validate")
     public String cofirmLogin(@RequestParam("email") String email, @RequestParam("password") String password){
@@ -39,9 +49,9 @@ public class UserController {
         Optional<User> user = userRepository.findUserByEmailAndPassword(email, password);
 
         if(user.isPresent())
-            return "redirect:/user/list";
+            return "redirect:".concat(USER_LIST_REQUEST);
 
-        return "home/public/login";
+        return LOGIN_PAGE;
     }
 
     @GetMapping("/new")
@@ -49,13 +59,13 @@ public class UserController {
 
         model.addAttribute("user", new User());
 
-        return "auth/user/public/create-new-user-account";
+        return CREATE_NEW_USER_PAGE;
     }
     @PostMapping("/save")
     public String save(@Valid User user, BindingResult results, RedirectAttributes attributes){
 
         if(results.hasErrors())
-            return "auth/user/public/create-new-user-account";
+            return CREATE_NEW_USER_PAGE;
 
         Role defaultRole = roleRepository.findByRole("USER");
 
@@ -66,20 +76,26 @@ public class UserController {
 
         userRepository.save(user);
         attributes.addFlashAttribute("message", "User successfully saved!");
-        return "redirect:/user/new";
+        return "redirect:".concat(NEW_USER_REQUEST);
     }
     @GetMapping("/delete/{id}")
-    public String delete(@PathVariable("id") long id){
+    public String delete(@PathVariable("id") long id, RedirectAttributes attributes){
 
-        Optional<User> foundUser = userRepository.findById(id);
+        try{
 
-        if(!foundUser.isPresent())
-            return "auth/user/adm/users-list";
+            User user = userService.findUserById(id);
 
-        User user = foundUser.get();
-        userRepository.delete(user);
+            userService.delete(user);
 
-        return "redirect:auth/user/adm/users-list";
+            return "redirect:".concat(USER_LIST_PAGE);
+        } catch (UserNotFoundException ex){
+
+            attributes.addFlashAttribute("message", ex.getMessage());
+            return USER_LIST_PAGE;
+
+        }
+
+
     }
 
     @GetMapping("/edit/{id}")
