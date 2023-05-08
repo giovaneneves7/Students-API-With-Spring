@@ -1,5 +1,8 @@
+//======================================{ PACKAGE }======================================//
 package br.com.ifba.giovaneneves.sms.student.model;
+//======================================{ END PACKAGE }======================================//
 
+//======================================{ IMPORTS }======================================//
 import br.com.ifba.giovaneneves.sms.infrastructure.model.AbstractEntity;
 import br.com.ifba.giovaneneves.sms.student.grade.model.Grade;
 import jakarta.persistence.Table;
@@ -20,8 +23,9 @@ import lombok.EqualsAndHashCode;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
-
+//======================================{ END IMPORTS }======================================//
 /**
  *
  * @author GiovaneNeves
@@ -30,7 +34,7 @@ import java.util.Date;
 @Entity
 @Table(name = "students")
 @Data
-public class Student extends AbstractEntity {
+public class Student extends AbstractEntity implements Serializable {
 
     //============================================{ ATTRIBUTES }============================================//
 
