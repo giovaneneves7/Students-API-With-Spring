@@ -1,6 +1,8 @@
 package br.com.ifba.giovaneneves.sms.student.service;
 
 //============================================{ IMPORTS }============================================//
+import br.com.ifba.giovaneneves.sms.api.resource.student.model.StudentResource;
+import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.BusinessException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.ExistingRegistrationNumberException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidAgeException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidRegistrationNumberException;
@@ -33,27 +35,45 @@ public class StudentService implements IStudentService {
     @Autowired
     private StudentRepository studentRepository;
 
+    @Autowired
+    private StudentConversor studentConversor;
+
     //============================================{ METHODS }============================================//
     /**
      *
      * Inserts a student in the database
-     * @param student to be added to the database.
+     * @param studentResource to be added to the database.
      */
-    public boolean saveStudent(Student student) throws ExistingRegistrationNumberException, InvalidRegistrationNumberException, InvalidAgeException {
+    public boolean save(StudentResource studentResource) {
+
+        Student student;
+
+        try{
+
+            student = studentConversor.ConvertStudent(studentResource);
+
+        } catch(BusinessException ex){
+
+            ex.printStackTrace();
+            return false;
+
+        }
 
         //--+ Checks if there is already a student with the same enrollment number in the database +--//
+        Student finalStudent = student;
         if(studentRepository.findAll().stream()
-                .anyMatch(s -> s.getRegistrationNumber().equals(student.getRegistrationNumber())))
-            throw new ExistingRegistrationNumberException(REGISTRATION_NUMBER_ALREADY_EXISTS);
+                .anyMatch(s -> s.getRegistrationNumber().equals(finalStudent.getRegistrationNumber())))
+            return false;
 
         //--+ Checks that the license plate number has only 4 digits +--//
         if(student.getRegistrationNumber().length() > 4)
-            throw new InvalidRegistrationNumberException(REGISTRATION_NUMBER_INVALID_LENGTH);
+            return false;
 
         //--+ Checks if the student is older than 13  +--//
         if((LocalDate.now().getYear() - student.getBirthDate().getYear()) < 13)
-            throw new InvalidAgeException(INVALID_AGE);
+            return false;
 
+        //--+ Saves the new student in the database +--//
         studentRepository.save(student);
 
         return true;
@@ -66,14 +86,10 @@ public class StudentService implements IStudentService {
      * @param id The ID of the student to be searched.
      * @return student with the specified ID.
      */
-    public Student findStudentById(long id) throws StudentNotFoundException{
+    public Optional<Student> findStudentById(long id){
         Optional<Student> foundStudent = this.studentRepository.findById(id);
 
-        //--+ Checks if there is a student with the specified id +--//
-        if(!foundStudent.isPresent())
-            throw new StudentNotFoundException(STUDENT_NOT_FOUND);
-
-        return foundStudent.get();
+        return foundStudent;
 
     }
 
@@ -123,6 +139,7 @@ public class StudentService implements IStudentService {
 
         return true;
     }
+
 
 
 }
