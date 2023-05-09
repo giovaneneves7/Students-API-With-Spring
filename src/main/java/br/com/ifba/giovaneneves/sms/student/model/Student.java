@@ -18,9 +18,11 @@ import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -34,6 +36,8 @@ import java.util.Date;
 @Entity
 @Table(name = "students")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Student extends AbstractEntity implements Serializable {
 
     //============================================{ ATTRIBUTES }============================================//
@@ -62,5 +66,20 @@ public class Student extends AbstractEntity implements Serializable {
     @NotNull
     public float averageGrades;
 
+    //======================================{ METHODS }======================================//
+    public void setAverageGrades(){
+
+       if(this.getGrade().getGrade1() == 0.0f && this.getGrade().getGrade2() == 0.0f  && this.getGrade().getGrade3() == 0.0f){
+
+           this.averageGrades = 0.0f;
+
+       } else{
+
+           float sum = 0;
+           sum = this.getGrade().getGrade1() + this.getGrade().getGrade2() + this.getGrade().getGrade3();
+           averageGrades = (sum / 3.0f);
+       }
+
+    }
 
 }
