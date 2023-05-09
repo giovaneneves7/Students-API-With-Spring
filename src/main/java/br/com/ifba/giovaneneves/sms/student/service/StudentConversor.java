@@ -18,7 +18,7 @@ public class StudentConversor {
     private static final String INVALID_BIRTH_DATE = "The date must be valid";
     private static final String WRONG_NUMBER_FORMAT = "The data types are not compatible";
 
-    public static Student ConvertStudent(StudentResource studentResource) throws BusinessException{
+    public Student ConvertStudent(StudentResource studentResource) throws BusinessException{
 
         Student student = new Student();
 
@@ -34,7 +34,7 @@ public class StudentConversor {
         return student;
     }
 
-    private static Date checkDate(String stringToBeConverted) throws BusinessException{
+    private Date checkDate(String stringToBeConverted) throws BusinessException{
 
         try{
 
@@ -50,7 +50,7 @@ public class StudentConversor {
 
     }
 
-    private static int convertToInt(String stringToBeConverted) throws BusinessException{
+    private int convertToInt(String stringToBeConverted) throws BusinessException{
 
         try{
 
@@ -63,7 +63,7 @@ public class StudentConversor {
         }
     }
 
-    private static Grade convertToGrade(GradeResource gradeResource) throws BusinessException{
+    private Grade convertToGrade(GradeResource gradeResource) throws BusinessException{
 
         try{
 
