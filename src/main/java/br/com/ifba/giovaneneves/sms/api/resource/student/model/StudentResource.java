@@ -28,5 +28,5 @@ public class StudentResource {
     private GradeResource grades;
 
     @JsonProperty("average_grades")
-    private String average_grades;
+    private String averageGrades;
 }
