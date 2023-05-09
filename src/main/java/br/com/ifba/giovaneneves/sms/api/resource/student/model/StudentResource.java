@@ -18,4 +18,15 @@ public class StudentResource {
     @JsonProperty("registration_number")
     private String registrationNumber;
 
+    @JsonProperty("birth_date")
+    private String birthDate;
+
+    @JsonProperty("academic_year")
+    private String academicYear;
+
+    @JsonProperty("grades")
+    private GradeResource grades;
+
+    @JsonProperty("average_grades")
+    private String average_grades;
 }
