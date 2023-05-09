@@ -1,16 +1,20 @@
 package br.com.ifba.giovaneneves.sms.infrastructure.facade;
 
+import br.com.ifba.giovaneneves.sms.api.resource.student.model.StudentResource;
 import br.com.ifba.giovaneneves.sms.student.model.Student;
 import br.com.ifba.giovaneneves.sms.student.service.StudentService;
-import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.ExistingRegistrationNumberException;
-import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidAgeException;
-import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidRegistrationNumberException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.StudentNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
+@Service
 public class Facade implements IFacade {
+
+    @Autowired
     private StudentService studentService;
 
     public Facade(){
@@ -20,11 +24,11 @@ public class Facade implements IFacade {
     /**
      *
      * Inserts a student int the database
-     * @param student to be added to the database.
+     * @param studentResource The student resource to be added to the database.
      */
     @Override
-    public boolean saveStudent(Student student) throws ExistingRegistrationNumberException, InvalidRegistrationNumberException, InvalidAgeException {
-        return studentService.saveStudent(student);
+    public boolean saveStudent(StudentResource studentResource){
+        return studentService.save(studentResource);
     }
 
     /**
@@ -34,7 +38,7 @@ public class Facade implements IFacade {
      * @return student with the specified ID, null otherwise.
      */
     @Override
-    public Student findStudentById(int id) throws StudentNotFoundException {
+    public Optional<Student> findStudentById(long id){
         return studentService.findStudentById(id);
     }
 

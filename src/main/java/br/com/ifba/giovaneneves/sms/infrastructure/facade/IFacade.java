@@ -1,5 +1,6 @@
 package br.com.ifba.giovaneneves.sms.infrastructure.facade;
 
+import br.com.ifba.giovaneneves.sms.api.resource.student.model.StudentResource;
 import br.com.ifba.giovaneneves.sms.student.model.Student;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.ExistingRegistrationNumberException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidAgeException;
@@ -7,6 +8,7 @@ import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidReg
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.StudentNotFoundException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IFacade {
 
@@ -15,9 +17,9 @@ public interface IFacade {
     /**
      *
      * Inserts a student int the database
-     * @param student to be added to the database.
+     * @param studentResource The student resource to be added to the database.
      */
-    boolean saveStudent(Student student) throws ExistingRegistrationNumberException, InvalidRegistrationNumberException, InvalidAgeException;
+    boolean saveStudent(StudentResource studentResource);
 
     /**
      *
@@ -25,7 +27,7 @@ public interface IFacade {
      * @param id of the student to be searched.
      * @return student with the specified ID, null otherwise.
      */
-    Student findStudentById(int id) throws StudentNotFoundException;
+    Optional<Student> findStudentById(long id);
 
     /**
      * List all students.
