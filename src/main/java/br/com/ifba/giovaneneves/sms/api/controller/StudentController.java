@@ -26,23 +26,18 @@ public class StudentController {
 
     //======================================{ METHODS }======================================//
     /**
-     * @return a list of students, null if there are none.
+     * @return a list of students or the list size if count is present.
      */
     @GetMapping("/students")
     @CrossOrigin(origins = "*")
-    public List<Student> getAllStudents(){
+    public ResponseEntity getAllStudents(@RequestParam(value="count", required = false, defaultValue = "false") Boolean count){
 
-        return facade.findAllStudents();
-    }
+        if(count){
+            return ResponseEntity.ok(facade.findAllStudents().size());
+        }
 
-    @GetMapping("/students/count")
-    @CrossOrigin(origins = "*")
-    public Long getStudentCount(){
+        return ResponseEntity.ok(facade.findAllStudents());
 
-        List<Student> students = facade.findAllStudents();
-        long size = (long) students.size();
-
-        return size;
     }
 
     @GetMapping("/students/average-grades")
@@ -52,7 +47,7 @@ public class StudentController {
         List<Student> students = facade.findAllStudents();
         double average;
         double total = students.stream().mapToDouble(Student::getAverageGrades).sum();
-        average = (total / getStudentCount());
+        average = (total / 3);
 
         DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
         average = Double.parseDouble(decimalFormat.format(average));
