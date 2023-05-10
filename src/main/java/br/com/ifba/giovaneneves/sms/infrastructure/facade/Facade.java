@@ -1,22 +1,28 @@
+//============================================{ PACKAGE }============================================//
 package br.com.ifba.giovaneneves.sms.infrastructure.facade;
+//============================================{ END PACKAGE }============================================//
 
+//============================================{ IMPORTS }============================================//
 import br.com.ifba.giovaneneves.sms.api.resource.student.model.StudentResource;
 import br.com.ifba.giovaneneves.sms.student.model.Student;
 import br.com.ifba.giovaneneves.sms.student.service.StudentService;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.StudentNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
+//============================================{ END IMPORTS }============================================//
 
 @Service
 public class Facade implements IFacade {
 
+    //============================================{ ATTRIBUTES }============================================//
     @Autowired
     private StudentService studentService;
 
+    //============================================{ STUDENT }============================================//
     public Facade(){
         this.studentService = new StudentService();
     }
@@ -57,8 +63,8 @@ public class Facade implements IFacade {
      * @return true if the student exists, false otherwise.
      */
     @Override
-    public boolean removeStudent(int id) throws StudentNotFoundException {
-        return studentService.deleteStudentById(id);
+    public boolean deleteStudentById(long id){
+        return studentService.deleteById(id);
     }
 
     /**
@@ -70,5 +76,15 @@ public class Facade implements IFacade {
     public boolean updateStudent(Student student) throws StudentNotFoundException {
         return studentService.updateStudent(student);
     }
+
+    /**
+     *
+     * @return Average grade point of all students.
+     */
+    @Override
+    public double getAverageStudentGrade() {
+        return studentService.getAverageGrades();
+    }
+
 
 }

@@ -40,7 +40,7 @@ public interface IFacade {
      * @param id of the student to be removed from the database.
      * @return true if the student exists, false otherwise.
      */
-    boolean removeStudent(int id) throws StudentNotFoundException;
+    boolean deleteStudentById(long id);
 
     /**
      *
@@ -48,4 +48,10 @@ public interface IFacade {
      * @return true if the student exists in the database and the update was successful, false otherwise.
      */
     boolean updateStudent(Student student) throws StudentNotFoundException;
+
+    /**
+     *
+     * @return Average grade point of all students.
+     */
+    double getAverageStudentGrade();
 }
