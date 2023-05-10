@@ -6,14 +6,12 @@ import br.com.ifba.giovaneneves.sms.infrastructure.facade.Facade;
 import br.com.ifba.giovaneneves.sms.student.model.Student;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
 import java.util.Optional;
-import java.util.List;
 //======================================{ END IMPORTS }======================================//
 
 @RestController
@@ -30,29 +28,19 @@ public class StudentController {
      */
     @GetMapping("/students")
     @CrossOrigin(origins = "*")
-    public ResponseEntity getAllStudents(@RequestParam(value="count", required = false, defaultValue = "false") Boolean count){
+    public ResponseEntity getAllStudents(@RequestParam(value="count", required = false, defaultValue = "false") Boolean count,
+                                         @RequestParam(value="average-grades", required = false, defaultValue = "false") Boolean averageGrades){
 
         if(count){
             return ResponseEntity.ok(facade.findAllStudents().size());
         }
 
+        if(averageGrades){
+            return ResponseEntity.ok(facade.getAverageStudentGrade());
+        }
+
         return ResponseEntity.ok(facade.findAllStudents());
 
-    }
-
-    @GetMapping("/students/average-grades")
-    @CrossOrigin(origins = "*")
-    public ResponseEntity<Double> getAverageGrades(){
-
-        List<Student> students = facade.findAllStudents();
-        double average;
-        double total = students.stream().mapToDouble(Student::getAverageGrades).sum();
-        average = (total / 3);
-
-        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
-        average = Double.parseDouble(decimalFormat.format(average));
-
-        return ResponseEntity.ok(average);
     }
 
     @GetMapping("/students/student/{id}")
@@ -73,9 +61,12 @@ public class StudentController {
 
     @DeleteMapping("/students/student/{id}")
     @CrossOrigin(origins = "*")
-    public void delete(@PathVariable(value = "id") Long id){
+    public ResponseEntity delete(@PathVariable(value = "id") Long id){
 
-        //facade.(id);
+        if(facade.deleteStudentById(id))
+            return ResponseEntity.ok("Success!");
+        else
+            return ResponseEntity.badRequest().body("Student not found!");
         
     }
 
