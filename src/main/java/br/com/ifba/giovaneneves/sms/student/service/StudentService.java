@@ -3,9 +3,6 @@ package br.com.ifba.giovaneneves.sms.student.service;
 //============================================{ IMPORTS }============================================//
 import br.com.ifba.giovaneneves.sms.api.resource.student.model.StudentResource;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.BusinessException;
-import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.ExistingRegistrationNumberException;
-import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidAgeException;
-import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.InvalidRegistrationNumberException;
 import br.com.ifba.giovaneneves.sms.infrastructure.exceptions.student.StudentNotFoundException;
 import br.com.ifba.giovaneneves.sms.student.dao.StudentRepository;
 import br.com.ifba.giovaneneves.sms.student.model.Student;
@@ -15,8 +12,11 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 //============================================{ END IMPORTS }============================================//
 
@@ -38,7 +38,7 @@ public class StudentService implements IStudentService {
     @Autowired
     private StudentConversor studentConversor;
 
-    //============================================{ METHODS }============================================//
+    //============================================{ METHODS - CRUD }============================================//
     /**
      *
      * Inserts a student in the database
@@ -108,13 +108,13 @@ public class StudentService implements IStudentService {
      * @param id of the student to be removed from the database.
      * @return true if the student exists, false otherwise.
      */
-    public boolean deleteStudentById(long id) throws StudentNotFoundException {
+    public boolean deleteById(long id) {
 
         Optional<Student> foundStudent = studentRepository.findById(id);
 
         //--+ Checks if there is a student with the specified id +--//
         if(!foundStudent.isPresent())
-            throw new StudentNotFoundException(STUDENT_NOT_FOUND);
+            return false;
 
         Student student = foundStudent.get();
 
@@ -140,6 +140,23 @@ public class StudentService implements IStudentService {
         return true;
     }
 
+    /**
+     *
+     * @return Average grade point of all students.
+     */
+    @Override
+    public double getAverageGrades(){
+
+        List<Student> students = studentRepository.findAll();
+        double average;
+        double total = students.stream().mapToDouble(Student::getAverageGrades).sum();
+        average = (total / 3);
+
+        DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+        average = Double.parseDouble(decimalFormat.format(average));
+
+        return average;
+    }
 
 
 }
