@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Component
-public class StudentConversor {
+public class StudentConversorService {
 
     private static final String INVALID_BIRTH_DATE = "The date must be valid";
     private static final String WRONG_NUMBER_FORMAT = "The data types are not compatible";

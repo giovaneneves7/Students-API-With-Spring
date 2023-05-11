@@ -36,7 +36,7 @@ public class StudentService implements IStudentService {
     private StudentRepository studentRepository;
 
     @Autowired
-    private StudentConversor studentConversor;
+    private StudentConversorService studentConversorService;
 
     //============================================{ METHODS - CRUD }============================================//
     /**
@@ -50,7 +50,7 @@ public class StudentService implements IStudentService {
 
         try{
 
-            student = studentConversor.ConvertStudent(studentResource);
+            student = studentConversorService.ConvertStudent(studentResource);
 
         } catch(BusinessException ex){
 
