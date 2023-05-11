@@ -38,46 +38,44 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Student extends AbstractEntity implements Serializable {
+public class Student extends AbstractEntity implements Serializable
+{
 
     //============================================{ ATTRIBUTES }============================================//
-
     @NotNull
     @Size(min = 4, message = "Student name cannot be less than 4 characters")
     public String name;
-
     @Column(nullable = false, unique = true)
     @Size(max = 4, message = "Registration Number cannot have more than 4 characters")
     public String registrationNumber;
-
     @Basic
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "MM/dd/yyyy")
     @NotNull
     public Date birthDate;
-
     @NotNull
     public int academicYear;
-
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "grade_id")
     public Grade grade;
-
     @NotNull
     public float averageGrades;
 
     //======================================{ METHODS }======================================//
-    public void setAverageGrades(){
+    public void setAverageGrades()
+    {
 
-       if(this.getGrade().getGrade1() == 0.0f && this.getGrade().getGrade2() == 0.0f  && this.getGrade().getGrade3() == 0.0f){
+       if(this.getGrade().getGrade1() == 0.0f && this.getGrade().getGrade2() == 0.0f  && this.getGrade().getGrade3() == 0.0f)
+       {
 
            this.averageGrades = 0.0f;
 
-       } else{
+       } else {
 
-           float sum = 0;
-           sum = this.getGrade().getGrade1() + this.getGrade().getGrade2() + this.getGrade().getGrade3();
+           float sum;
+           sum = (this.getGrade().getGrade1() + this.getGrade().getGrade2() + this.getGrade().getGrade3());
            averageGrades = (sum / 3.0f);
+
        }
 
     }
